@@ -1,194 +1,123 @@
 <!doctype html>
 <html lang="ru">
-<head>
+<голова>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#08111f">
-<title>JARVIS — голосовой помощник</title>
+<meta name="theme-color" content="#080510">
+<title>ВЛАДАС — персональный ИИ-ассистент</title>
 <style>
-:root{color-scheme:dark;--bg:#08111f;--panel:#111e31;--line:#29415f;--muted:#9aacc4;--cyan:#53d7f4;--purple:#7167e8}
+:root{color-scheme:dark;--bg:#080510;--panel:#151020;--line:#493064;--muted:#aa9dbd;--violet:#a33cff;--gold:#ffd84a;--text:#fbf8ff}
 *{box-sizing:border-box}
-body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 50% 12%,#1c3556 0,#0b1729 48%,#070d18 100%);color:#eef6ff;font:16px system-ui,-apple-system,Segoe UI,sans-serif}
-main{width:min(760px,100%);margin:auto;padding:18px 15px max(24px,env(safe-area-inset-bottom))}
-header{text-align:center;padding:8px 0 15px}
-h1{font-size:27px;letter-spacing:7px;margin:0}
-header p{margin:5px 0;color:var(--muted);font-size:12px;letter-spacing:3px}
-.status{display:flex;justify-content:center;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin:4px 0 12px}
-.dot{width:8px;height:8px;border-radius:50%;background:#e3ad4e;box-shadow:0 0 12px currentColor}
-.dot.ok{background:#43d69a}.dot.bad{background:#ff647d}
-.panel{background:#111e31eF;border:1px solid var(--line);border-radius:22px;padding:15px;margin:12px 0;box-shadow:0 12px 35px #0003}
-.hero{text-align:center;padding:17px 10px 12px}
-.orb{width:150px;height:150px;margin:5px auto 17px;border-radius:50%;position:relative;background:radial-gradient(circle at 35% 28%,#b6f7ff 0,#51cde9 16%,#2478bb 43%,#252c70 75%,#111a3a 100%);box-shadow:0 0 28px #39c8f488,0 0 75px #4a5de055,inset 0 0 25px #d7ffff66}
-.orb:before,.orb:after{content:"";position:absolute;inset:-13px;border:1px solid #53d7f477;border-radius:50%;animation:spin 13s linear infinite}
-.orb:after{inset:-24px;border-color:#8879ec77;animation-direction:reverse;animation-duration:19s}
-.orb.listen{animation:pulse 1s infinite}.orb.think{animation:pulse .6s infinite}
-@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.06);filter:brightness(1.3)}}
-#state{color:#b9d9ec;font-size:14px;min-height:23px}
-.small{color:var(--muted);font-size:13px;margin:6px 0 0}
-#messages{height:30vh;min-height:180px;max-height:340px;overflow:auto;display:flex;flex-direction:column;gap:10px}
-.msg{max-width:92%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45;font-size:14px}
-.assistant{align-self:flex-start;background:#1b304d}.user{align-self:flex-end;background:#35417d}
-.row{display:flex;gap:9px}.row>*{min-width:0}
-textarea{width:100%;min-height:52px;max-height:120px;resize:vertical;background:#081321;border:1px solid var(--line);border-radius:13px;color:white;padding:13px;font:inherit;outline:none}
-button{border:1px solid #345477;background:#1a2d49;color:#fff;border-radius:14px;padding:13px 15px;font:600 14px system-ui;cursor:pointer}
-button.primary{background:linear-gradient(115deg,#168fb8,#5149ac);border:0}
+body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 50% 8%,#28113d 0,#120a20 38%,#07050d 78%);color:var(--text);font:16px system-ui,-apple-system,"Segoe UI",sans-serif}
+main{width:min(760px,100%);margin:auto;padding:16px 14px max(24px,env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;justify-content:space-between;margin:2px 2px 12px}
+.status{display:flex;align-items:center;gap:8px;color:#c6b8d8;font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:#e3ad4e;box-shadow:0 0 12px currentColor}.dot.ok{background:#4ce6a1}.dot.bad{background:#ff647d}
+.top-actions{display:flex;gap:8px}
+.top-actions button{width:40px;height:40px;border-radius:50%;padding:0;font-size:17px}
+button{border:1px solid #543777;background:#21152f;color:#fff;border-radius:15px;padding:13px 15px;font:600 14px system-ui;cursor:pointer}
 button:disabled{opacity:.45}
-#send{min-width:105px}
+.brand{text-align:center;padding:5px 0 8px}
+.logo{width:112px;height:112px;margin:5px auto 8px;position:relative;border-radius:42% 58% 53% 47%/48% 43% 57% 52%;background:conic-gradient(from 35deg,#ffe76a,#a832ff,#6417d9,#d34cff,#ffd84a);filter:drop-shadow(0 0 19px #a43cff99);animation:morph 10s ease-in-out infinite alternate}
+.logo:before{content:"";position:absolute;inset:25px;border-radius:inherit;background:#10091b;box-shadow:inset 0 0 24px #8d35ff66}
+.logo:after{content:"";position:absolute;inset:0;border:2px solid #f0c7ff;border-radius:inherit;opacity:.8}
+@keyframes morph{to{transform:rotate(28deg) scale(.96);border-radius:58% 42% 45% 55%/44% 59% 41% 56%}}
+h1{font-size:34px;letter-spacing:8px;font-weight:650;margin:0 0 3px;padding-left:8px}
+.tagline{color:#c0b2d2;letter-spacing:1.2px;font-size:13px}
+.hero{margin:15px auto 16px;width:min(470px,100%);border:1px solid #7d38b6;border-radius:28px;background:linear-gradient(145deg,#1b102b,#100b19);padding:18px 12px 16px;text-align:center;box-shadow:0 0 28px #9b35ff25,inset 0 0 25px #9b35ff0c}
+.orb{width:150px;height:150px;margin:4px auto 13px;border-radius:50%;position:relative;background:radial-gradient(circle at 34% 27%,#fff4bd 0,#e5baff 9%,#a33cff 29%,#50178b 60%,#160d2b 82%);box-shadow:0 0 26px #b43cff99,0 0 66px #7826c755,inset 0 0 22px #fff7ff77}
+.orb:before,.orb:after{content:"";position:absolute;inset:-13px;border:1px solid #d45cffaa;border-radius:50%;animation:spin 13s linear infinite}
+.orb:after{inset:-23px;border-color:#ffd84a99;animation-direction:reverse;animation-duration:18s}
+.orb.listen{animation:pulse 1s infinite}.orb.think{animation:pulse .6s infinite}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{transform:scale(1.06);filter:brightness(1.35)}}
+#state{color:#f2dfff;font-size:15px;min-height:24px}
+.small{color:var(--muted);font-size:12px;line-height:1.45;margin:7px 0 0}
+.shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:15px 0}
+.tile{min-height:105px;padding:12px 7px;border:1px solid #573477;border-radius:19px;background:linear-gradient(145deg,#241433,#120d1d);text-align:center}
+.tile .ico{display:block;color:#d28cff;font-size:22px;margin-bottom:6px}.tile b{display:block;font-size:13px}.tile small{display:block;font-size:10px;color:#b9a9cb;margin-top:4px}
+.panel{border:1px solid #493064;border-radius:23px;background:#100c1b;padding:12px;margin:12px 0;box-shadow:0 10px 28px #0004}
+#messages{height:0;max-height:35vh;overflow:auto;display:flex;flex-direction:column;gap:9px;transition:height .2s}
+#messages.has-messages{height:220px;padding:3px 2px 10px}
+.msg{max-width:92%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45;font-size:14px}
+.assistant{align-self:flex-start;background:#241633;border:1px solid #4d3068}.user{align-self:flex-end;background:#49216e;border:1px solid #8543b2}
+.row{display:flex;align-items:center;gap:9px}.row>*{min-width:0}
+textarea{width:100%;min-height:50px;max-height:120px;resize:vertical;background:#0b0812;border:1px solid #493064;border-radius:15px;color:white;padding:12px;font:inherit;outline:none}
+textarea::placeholder{color:#9c8cad}
+.primary{background:linear-gradient(115deg,#8b25d5,#5422a3);border:1px solid #c46cff}
+.gold{border-color:#b98d27;background:linear-gradient(115deg,#6e4b12,#40235d)}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
-.note{font-size:11px;line-height:1.5;color:#8195b0;text-align:center;margin:13px 5px}
-@media(max-width:420px){.orb{width:128px;height:128px}main{padding-left:12px;padding-right:12px}.panel{padding:12px}}
+#send{min-width:92px}
+.settings{display:none;margin-top:10px;padding-top:10px;border-top:1px solid #493064}
+.settings.open{display:block}
+label{display:block;color:#c7b8d8;font-size:12px;margin:8px 0 5px}
+select{width:100%;padding:11px;background:#0b0812;border:1px solid #573777;border-radius:12px;color:#fff}
+.note{font-size:10px;line-height:1.5;color:#8f829f;text-align:center;margin:13px 5px}
+@media(max-width:390px){h1{font-size:29px;letter-spacing:6px}.logo{width:96px;height:96px}.orb{width:128px;height:128px}.shortcuts{gap:6px}.tile{min-height:98px}}
 </style>
 </head>
-<body>
-<main>
-<header><h1>J.A.R.V.I.S.</h1><p>PERSONAL AI VOICE ASSISTANT</p></header>
-<div class="status"><span class="dot" id="dot"></span><span id="connection">Проверяю соединение…</span></div>
-<section class="panel hero">
-  <div class="orb" id="orb"></div>
-  <div id="state">Готов к диалогу</div>
-  <p class="small">Нажми «Слушать» или напиши сообщение</p>
-</section>
-<section class="panel"><div id="messages"><div class="msg assistant">Привет! Я JARVIS. Чем могу помочь?</div></div></section>
-<section class="panel">
-  <div class="actions">
-    <button class="primary" id="listen">🎙 Слушать</button>
-    <button id="stop">■ Стоп</button>
+<тело>
+<главное>
+  <div class="top">
+    <div class="status"><span class="dot" id="dot"></span><span id="connection">Проверяю соединение…</span></div>
+    <div class="top-actions"><button id="settingsBtn" aria-label=" Настройки">⚙</button></div>
   </div>
-  <div class="row">
-    <textarea id="prompt" rows="1" placeholder="Напиши сообщение…"></textarea>
-    <button class="primary" id="send">Отправить</button>
-  </div>
-  <p class="small">Голосовой ввод работает в браузерах с поддержкой распознавания речи. Разреши доступ к микрофону.</p>
-</section>
-<p class="note">JARVIS · Подключение через защищённый сервер. API-ключ хранится на сервере, в этой странице его нет.</p>
+  <header class="brand">
+    <div class="logo" aria-hidden="true"></div>
+    <h1>ВЛАДАС</h1>
+    <div class="tagline">ВАШ ЛИЧНЫЙ ИИ-АССИСТЕНТ</div>
+  </header>
+  <section class="hero">
+    <div class="orb" id="orb"></div>
+    <div id="state">Готов к диалогу</div>
+    <p class="small">Нажми «Слушать» или написать сообщение</p>
+  </section>
+  <section class="shortcuts">
+    <button class="tile" data-prompt="Помоги разобраться с автомобилем:"><span class="ico">🚘</span><b>Авто</b><small>Помощь с машиной</small></button>
+    <button class="tile" data-prompt="Помоги спланировать дела:"><span class="ico">▣</span><b>Дела</b><small>Планы и задачи</small></button>
+    <button class="tile" data-prompt="Объясни мне простые слова:"><span class="ico">✦</span><b>Знания</b><small>Ответы и обучение</small></button>
+    <button class="tile" data-prompt="Какие у тебя есть возможности?"><span class="ico">▦</span><b>Ещё</b><small>Все функции</small></button>
+  </section>
+  <section class="panel"><div id="messages"></div></section>
+  <section class="panel">
+    <div class="actions">
+      <button class="primary" id="listen">🎙 Слушать</button>
+      <button id="stop">■ Стоп</button>
+    </div>
+    <div class="row">
+      <textarea id="prompt" rows="1" Placeholder="Напишите или скажите…"></textarea>
+      <button class="primary gold" id="send">➤</button>
+    </div>
+    <div class="settings" id="settings">
+      <label for="voice">Голос ответа</label><select id="voice"><option value="">Автоматический русский голос</option></select>
+      <label for="rate">Скорость речи</label><select id="rate"><option value="0.9">Спокойно</option><option value="1" selected>Обычно</option><option value="1.08">Бодро</option></select>
+      <p class="small">Доступные голоса от Android и браузера. Можно выбрать любой установленный русский голос.</p>
+    </div>
+    <p class="small">Голосовой ввод работает в браузерах с поддержкой речи. Разрешите доступ к микрофону.</p>
+  </section>
+  <p class="note">ВЛАДАС · Подключение через защищённый сервер. API-ключ хранения на расстоянии.</p>
 </main>
 <script>
 (() => {
-  const $ = id => document.getElementById(id);
-  const messagesEl = $("messages"), orb = $("orb"), state = $("state");
-  const history = [];
-  let busy = false, recognition = null, listening = false;
-
-  function setState(text, mode="") {
-    state.textContent = text;
-    orb.className = "orb" + (mode ? " " + mode : "");
-  }
-  function addMessage(text, role) {
-    const el = document.createElement("div");
-    el.className = "msg " + role;
-    el.textContent = text;
-    messagesEl.appendChild(el);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-    return el;
-  }
-  function setConnection(ok, text) {
-    $("dot").className = "dot" + (ok ? " ok" : " bad");
-    $("connection").textContent = text;
-  }
-  async function checkServer() {
-    try {
-      const r = await fetch("/api/health", {cache:"no-store"});
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      const data = await r.json();
-      setConnection(true, "Сервер на связи · " + (data.model || "JARVIS"));
-    } catch (e) {
-      setConnection(false, "Нет связи с сервером");
-      setState("Сервер не отвечает. Обнови страницу чуть позже.");
-    }
-  }
-  async function sendMessage(raw) {
-    const text = raw.trim();
-    if (!text || busy) return;
-    busy = true;
-    $("send").disabled = true;
-    $("listen").disabled = true;
-    addMessage(text, "user");
-    history.push({role:"user", content:text});
-    const placeholder = addMessage("Думаю…", "assistant");
-    setState("Обрабатываю запрос…", "think");
-    try {
-      const response = await fetch("/api/chat", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({messages:[
-          {role:"system",content:"Ты JARVIS — умный, дружелюбный русскоязычный голосовой помощник. Отвечай естественно, понятно и по делу."},
-          ...history
-        ]})
-      });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data.error || ("Ошибка сервера: " + response.status));
-      const answer = data?.choices?.[0]?.message?.content;
-      if (!answer) throw new Error("Сервер вернул пустой ответ");
-      placeholder.textContent = typeof answer === "string" ? answer : JSON.stringify(answer);
-      history.push({role:"assistant",content:placeholder.textContent});
-      if ("speechSynthesis" in window) {
-        speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(placeholder.textContent);
-        utterance.lang = "ru-RU";
-        speechSynthesis.speak(utterance);
-      }
-      setState("Ответ готов · можешь продолжать");
-    } catch (err) {
-      placeholder.textContent = "Не получилось отправить сообщение: " + err.message;
-      history.pop();
-      setState("Ошибка соединения");
-    } finally {
-      busy = false;
-      $("send").disabled = false;
-      $("listen").disabled = false;
-    }
-  }
-  function startListening() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setState("Распознавание речи не поддерживается. Попробуй Chrome.");
-      return;
-    }
-    if (recognition) { try { recognition.stop(); } catch (_) {} }
-    recognition = new SpeechRecognition();
-    recognition.lang = "ru-RU";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.onstart = () => {
-      listening = true;
-      $("listen").textContent = "🎙 Слушаю…";
-      setState("Слушаю тебя…", "listen");
-    };
-    recognition.onresult = event => sendMessage(event.results[0][0].transcript);
-    recognition.onerror = event => {
-      listening = false;
-      $("listen").textContent = "🎙 Слушать";
-      setState("Ошибка микрофона: " + event.error);
-    };
-    recognition.onend = () => {
-      listening = false;
-      $("listen").textContent = "🎙 Слушать";
-      if (!busy && state.textContent === "Слушаю тебя…") setState("Готов к диалогу");
-    };
-    try { recognition.start(); } catch (_) { setState("Не удалось включить микрофон"); }
-  }
-  $("listen").addEventListener("click", () => {
-    if (listening) { recognition && recognition.stop(); }
-    else startListening();
-  });
-  $("stop").addEventListener("click", () => {
-    if (recognition) recognition.stop();
-    if ("speechSynthesis" in window) speechSynthesis.cancel();
-    setState("Остановлено");
-  });
-  $("send").addEventListener("click", () => {
-    const input = $("prompt");
-    const value = input.value;
-    input.value = "";
-    sendMessage(value);
-  });
-  $("prompt").addEventListener("keydown", event => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      $("send").click();
-    }
-  });
-  checkServer();
+ const $=id=>document.getElementById(id), messagesEl=$("messages"), orb=$("orb"), state=$("state");
+ const history=[]; let busy=false, recognition=null, listening=false, voices=[];
+ function setState(t,mode=""){state.textContent=t;orb.className="orb"+(mode?" "+mode:"")}
+ function addMessage(text,role){const el=document.createElement("div");el.className="msg "+role;el.textContent=text;messagesEl.appendChild(el);messagesEl.classList.add("has-messages");messagesEl.scrollTop=messagesEl.scrollHeight;return el}
+ function setConnection(ok,text){$("dot").className="dot"+(ok?" ok":" bad");$("connection").textContent=text}
+ асинхронная функция checkServer(){try{const r=await fetch("/api/health",{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);const d=await r.json();setConnection(true,"Онлайн · "+(d.model||"ВЛАДАС"))}catch(e){setConnection(false,"Нет связи с сервером");setState("Сервер не отвечает. Попробуй обновить страницу.")}}
+ function loadVoices(){if(!("speechSynthesis"in window))return;voices=speechSynthesis.getVoices();const sel=$("voice");const chosen=sel.value;sel.innerHTML='<option value="">Автоматический русский голос</option>';voices.forEach((v,i)=>{const o=document.createElement("option");o.value=String(i);o.textContent=v.name+" ("+v.lang+")";sel.appendChild(o)});if(chosen)sel.value=chosen}
+ function speak(text){if(!("speechSynthesis"in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="ru-RU";u.rate=Number($("rate").value||1);const index=$("voice").value;if(index!==""&&voices[Number(index)])u.voice=voices[Number(index)];else{const ru=voices.find(v=>/^ru(-|$)/i.test(v.lang));if(ru)u.voice=ru}speechSynthesis.speak(u)}
+ async function sendMessage(raw){const text=raw.trim();if(!text||busy)return;busy=true;$("send").disabled=true;$("listen").disabled=true;addMessage(text,"user");history.push({role:"user",content:text});const placeholder=addMessage("Сейчас разберусь…","assistant");setState("Думаю над ответом…","think");
+ try{const response=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"system",content:"Тебя зовут ВЛАДАС. Ты личный русскоязычный ИИ-помощник с характером: уверенный, сообразительный, дружелюбный, живой и тактичный. Общайся естественно, как умный напарник: без канцелярита, без излишней многословности, с легким юмором, когда уместно. Не называй себя ДЖАРВИСом. Не утверждай, что выполнил действие, если не выполнил.
+ const data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.error||("Ошибка сервера: "+response.status));const ответ=data?.choices?.[0]?.message?.content;if(!answer)throw Error("Сервер вернул пустой ответ");placeholder.textContent=typeof ответ==="string"?ответ:JSON.stringify(ответ);history.push({role:"assistant",content:placeholder.textContent});speak(placeholder.textContent);setState("Ответ готов · я на связи")}catch(err){placeholder.textContent="Не получилось отправить сообщение: "+err.message;history.pop();setState("Ошибка) соединения")}finally{busy=false;$("send").disabled=false;$("listen").disabled=false}}
+ function startListening(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){setState("Распознание речи не логически. Попробуй Chrome.");return}if(recognition){try{recognition.stop()}catch(_){}}recognition=new SR();recognition.lang="ru-RU";recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onstart=()=>{listening=true;$("listen").textContent="🎙 Слушаю…";setState("Слушаю тебя…","listen")};recognition.onresult=e=>sendMessage(e.results[0][0].transcript);recognition.onerror=e=>{listening=false;$("listen").textContent="🎙 Слушать";setState("Ошибка микрофона: "+e.error)};recognition.onend=()=>{listening=false;$("listen").textContent="🎙 Слушать";if(!busy&&state.textContent==="Слушаю тебя…")setState("Готов к диалогу")};try{recognition.start()}catch(_){setState("Не удалось отключить микрофон")}}
+ $("listen").addEventListener("click",()=>{if(listening)recognition&&recognition.stop();else startListening()});
+ $("stop").addEventListener("click",()=>{if(recognition)recognition.stop();if("speechSynthesis"in window)speechSynthesis.cancel();setState("О установлено")});
+ $("send").addEventListener("click",()=>{const v=$("prompt").value;$("prompt").value="";sendMessage(v)});
+ $("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("send").click()}});
+ $("settingsBtn").addEventListener("click",()=>$("settings").classList.toggle("open"));
+ document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>{$("prompt").value=b.dataset.prompt;$("prompt").focus()}));
+ if("speechSynthesis"in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+ addMessage("Привет! Я ВЛАДАС. Рад знакомству. Чем займёмся?","assistant");checkServer();
 })();
 </script>
 </body>
